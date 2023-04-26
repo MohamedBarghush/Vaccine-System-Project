@@ -15,6 +15,12 @@ public:
     int age;
     string vaccineType;
     bool vaccinated;
+ /*
+    int id;
+    string password;
+    string government;
+    char gender;
+    */
 };
 
 class MainManager {
