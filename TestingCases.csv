@@ -1,3 +1,5 @@
-Name,Age,Vaccine Type,Vaccinated
-Omar Ahmed,19,ExtraZinc,Yes
-Mohamed Gamal,19,ExtraZinc,No
+Name,ID,Government,Age,Gender,Vaccine Type,First Dose,First Date,Second Dose,Second Date
+Mohamed Gamal,2021170458,Cairo,19,M,ExtraZinc,Yes,21/4/2021,Yes,21/6/2021
+Omar Ahmed,2021170459,Cairo,19,M,ExtraZinc,Yes,21/4/2021,No,
+Yousef Eslam,2021170460,Cairo,19,M,ExtraZinc,No,,Yes,21/6/2021
+Samira Adel,2021170461,Cairo,19,F,ExtraZinc,No,,No,
