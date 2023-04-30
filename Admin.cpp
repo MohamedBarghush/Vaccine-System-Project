@@ -30,9 +30,39 @@ void Admin::ViewOne(int ID)
     ShowEntry(ID);
 }
 
-void Admin::ViewOrderedByAge()
-{
+void Admin::ViewOrderedByAge() {
+    vector<pair<int, Entry>> ageVector;
 
+    // Insert all entries into the vector
+    for (auto& entry : entries) {
+        ageVector.push_back(make_pair(entry.second.age, entry.second));
+    }
+
+    // Insert all entries in the waiting list into the vector
+    queue<Entry> tempWaitingList = waitingList;
+    while (!tempWaitingList.empty()) {
+        ageVector.push_back(make_pair(tempWaitingList.front().age, tempWaitingList.front()));
+        tempWaitingList.pop();
+    }
+    tempWaitingList.~queue();
+
+    // Sort entries in ascending order of age
+    std::sort(ageVector.begin(), ageVector.end(), [](auto& a, auto& b) {
+        return a.second.age < b.second.age;
+        });
+
+    // Print entries in ascending order of age
+    for (auto& entry : ageVector) {
+        cout << "Name: " << entry.second.name << "\n"
+            << "ID: " << entry.second.id << "\n"
+            << "Government: " << entry.second.government << "\n"
+            << "Age: " << entry.second.age << "\n"
+            << "Gender: " << entry.second.gender << "\n"
+            << "Vaccine Type: " << entry.second.vaccineType << "\n"
+            << "Vaccinated First Dose: " << (entry.second.firstDose ? "Yes, on " + entry.second.firstDoseDate : "No") << "\n"
+            << "Vaccinated Second Dose: " << (entry.second.secondDose ? "Yes, on " + entry.second.secondDoseDate : "No")
+            << "\n\n";
+    }
 }
 
 void Admin::ViewWaitingList()
@@ -117,15 +147,15 @@ float Admin::ViewStatistics()
                 females++;
             }
         }
-        queue<Entry> tempList = waitingList;
-        while (!tempList.empty()) {
-            if (tempList.front().age == 'F' || tempList.front().age == 'f')
+        queue<Entry> tempList2 = waitingList;
+        while (!tempList2.empty()) {
+            if (tempList2.front().age == 'F' || tempList2.front().age == 'f')
             {
                 females++;
             }
-            tempList.pop();
+            tempList2.pop();
         }
-        tempList.~queue();
+        tempList2.~queue();
         return (females / entries.size());
     }
 
