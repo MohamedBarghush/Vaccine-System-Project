@@ -9,16 +9,30 @@
 #include"Admin.h"
 
 using namespace std;
+void MainManager::MainMenu()
+{
+    while (true)
+    {
+        Start();
+        cout << "If You Want To Continue Press Y or y\n";
+        cout << "Else press N or n\n";
+        char ch; cin >> ch;
+        if (ch == 'N' || ch == 'n')
+        {
+            break;
+        }
+    }
+}
 void MainManager::Start()
 {
     cout << "Welcome To Our Vacccine Tracking System \n";
     cout << "If You Are Admin Write Admin if you are User Type User \n";
-    cout << "Case Doesnt Mater:\n ";
+    cout << "Case Doesnt Mater:\n";
     string s;
     cin >> s;
     if (s == "admin")
     {
-        cout << "Enter The Admin Password\n";
+        cout <<"Enter The Admin Password\n";
         string pass;
         cin >> pass;
         cout << "You Have 3 Attemps\n";
@@ -27,6 +41,7 @@ void MainManager::Start()
         while (!Check_Admin(pass))
         {
             cout << "The Password is not correct try again\n";
+            cin >> pass;
             count++;
             if (count == 3)
             {
@@ -150,7 +165,8 @@ void MainManager::Start()
 
 bool MainManager::Check_Admin(string s)
 {
-    if (s == Admin::password)
+    Admin A1;
+    if (s == A1.password)
     {
         return true;
     }

@@ -15,6 +15,6 @@ int main()
 	//mainManager.SaveEntriesToFile("TestingCases.csv");
 	//mainManager.ShowEntry(2021170459);
 	//mainManager.ShowAll();
-	mainManager.Start();
+	mainManager.MainMenu();
 	return 0;
 }

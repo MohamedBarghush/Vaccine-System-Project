@@ -47,6 +47,7 @@ public:
     void LoadEntriesFromFile(string filename);
 
     // Main Menu Functions
+    void MainMenu();
     void Start();
     bool Check_Admin(string s);
 };
