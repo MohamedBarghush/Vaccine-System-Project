@@ -1,7 +1,7 @@
 #pragma once
 #include "MainManager.h"
 #include <queue>
-class Admin {
+class Admin : public MainManager {
 public:
     void Delete(int ID);
     void DeleteAll();

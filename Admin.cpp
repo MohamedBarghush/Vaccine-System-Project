@@ -1,16 +1,18 @@
 #include "Admin.h"
-#include "MainManager.h"
+
 void Admin::Delete(int ID)
 {
-	DeleteEntry(ID)
+	DeleteEntry(ID);
 }
 
 void Admin::DeleteAll()
 {
+	
 }
 
 void Admin::ViewAll()
 {
+
 }
 
 void Admin::ViewOne(int ID)
