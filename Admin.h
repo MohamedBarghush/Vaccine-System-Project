@@ -1,8 +1,14 @@
 #pragma once
-
+#include "MainManager.h"
+#include <queue>
 class Admin {
 public:
-	void Delete(int ID);
-	void ViewAll();
-	void ViewOne(int ID);
+    void Delete(int ID);
+    void DeleteAll();
+    void ViewAll();
+    void ViewOne(int ID);
+    void ViewOrderedByAge();
+    void ViewWaitingList();
+    void ViewDoses();
+    float ViewStatistics();
 };
