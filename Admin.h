@@ -9,6 +9,6 @@ public:
     void ViewOne(int ID);
     void ViewOrderedByAge();
     void ViewWaitingList();
-    void ViewDoses();
+    void ViewDosesRecord();
     float ViewStatistics();
 };

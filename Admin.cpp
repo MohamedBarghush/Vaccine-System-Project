@@ -87,9 +87,51 @@ void Admin::ViewWaitingList()
     tempQueue.~queue();
 }
 
-void Admin::ViewDoses()
-{
-
+void Admin::ViewDosesRecord() {
+    char input;
+    cout << "Enter 1 to view records of people who received one dose only" << endl;
+    cout << "Enter 2 to view records of people who received both doses" << endl;
+    cin >> input;
+    vector<Entry> records;
+    // Filter records based on the number of doses
+    if (input == '1') {
+        for (auto& entry : entries) {
+            if (entry.second.firstDose && !entry.second.secondDose) {
+                records.push_back(entry.second);
+            }
+        }
+        queue<Entry> tempList = waitingList;
+        while (!tempList.empty()) {
+            if (tempList.front().firstDose && !tempList.front().secondDose) {
+                records.push_back(tempList.front());
+            }
+            tempList.pop();
+        }
+        tempList.~queue();
+    }
+    else if (input == '2') {
+        for (auto& entry : entries) {
+            if (entry.second.firstDose && entry.second.secondDose) {
+                records.push_back(entry.second);
+            }
+        }
+    }
+    // Sort records by ID
+    sort(records.begin(), records.end(), [](Entry a, Entry b) {
+        return a.id < b.id;
+        });
+    // Print the filtered and sorted records
+    for (auto record : records) {
+        cout << "Name: " << record.name << "\n"
+            << "ID: " << record.id << "\n"
+            << "Government: " << record.government << "\n"
+            << "Age: " << record.age << "\n"
+            << "Gender: " << record.gender << "\n"
+            << "Vaccine Type: " << record.vaccineType << "\n"
+            << "Vaccinated First Dose: " << (record.firstDose ? "Yes, on " + record.firstDoseDate : "No") << "\n"
+            << "Vaccinated Second Dose: " << (record.secondDose ? "Yes, on " + record.secondDoseDate : "No")
+            << "\n\n";
+    }
 }
 
 float Admin::ViewStatistics()
