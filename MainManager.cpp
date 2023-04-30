@@ -115,6 +115,15 @@ void MainManager::DeleteEntry(int id) {
     }
 }
 
+// Function to delete all the entries everywhere
+void MainManager::Delete_All() {
+    entries.clear();
+    while (!waitingList.empty()) {
+        waitingList.pop();
+    }
+    // you need to save the entries to the file
+}
+
 // Function to show a certain entry
 void MainManager::ShowEntry(int id) {
     auto it = entries.find(id);
@@ -167,9 +176,10 @@ void MainManager::ShowAll() {
             << "Vaccinated Second Dose: " << (entry.second.secondDose ? "Yes, on "+entry.second.secondDoseDate : "No") << "\n\n";
     }
     cout << "Waiting list:\n";
+    queue<Entry> tempQueue = waitingList;
     int i = 1;
-    while (!waitingList.empty()) {
-        Entry entry = waitingList.front();
+    while (!tempQueue.empty()) {
+        Entry entry = tempQueue.front();
         cout << "\n" << i << ". Name: " << entry.name << "\n"
             << "ID: " << entry.id << "\n"
             << "Government: " << entry.government << "\n"
@@ -178,9 +188,10 @@ void MainManager::ShowAll() {
             << "Vaccine Type: " << entry.vaccineType << "\n"
             << "Vaccinated First Dose: " << (entry.firstDose ? "Yes, on " + entry.firstDoseDate : "No") << "\n"
             << "Vaccinated Second Dose: " << (entry.secondDose ? "Yes, on " + entry.secondDoseDate : "No") << "\n\n";
-        waitingList.pop();
+        tempQueue.pop();
         i++;
     }
+    tempQueue.~queue();
 }
 
 // Function to write the entries and waiting list to a CSV file
