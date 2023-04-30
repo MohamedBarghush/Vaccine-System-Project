@@ -37,10 +37,26 @@ void Admin::ViewOrderedByAge()
 
 void Admin::ViewWaitingList()
 {
+    cout << "Waiting list:\n";
+    int i = 1;
+    while (!waitingList.empty()) {
+        Entry entry = waitingList.front();
+        cout << "\n" << i << ". Name: " << entry.name << "\n"
+            << "ID: " << entry.id << "\n"
+            << "Government: " << entry.government << "\n"
+            << "Age: " << entry.age << "\n"
+            << "Gender: " << entry.gender << "\n"
+            << "Vaccine Type: " << entry.vaccineType << "\n"
+            << "Vaccinated First Dose: " << (entry.firstDose ? "Yes, on " + entry.firstDoseDate : "No") << "\n"
+            << "Vaccinated Second Dose: " << (entry.secondDose ? "Yes, on " + entry.secondDoseDate : "No") << "\n\n";
+        waitingList.pop();
+        i++;
+    }
 }
 
 void Admin::ViewDoses()
 {
+
 }
 
 float Admin::ViewStatistics()
