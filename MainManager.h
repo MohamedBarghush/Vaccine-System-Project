@@ -17,24 +17,30 @@ public:
     int age;
     char gender;
     string vaccineType;
+    bool firstDose;
+
+
+    string firstDoseDate;
+    bool secondDose;
+    string secondDoseDate;
+
+
+
+
 };
 
 class MainManager {
 private:
-    unordered_map<int, Entry> entries; // Map to store the entries
+    unordered_map<string, Entry> entries; // Map to store the entries
     queue<Entry> waitingList; // Queue to store the entries waiting for vaccination
 
 public:
     // Function to create a new entry and add it to the entries vector or waiting list
-    void CreateEntry(string name, int id, string government, int age, char gender, string vaccineType, bool firstDose, string firstDate, bool secondDose, string secondDate);
-    // Function to edit an entry and add it to the waiting list if not fully vaccinated
-    bool EditEntry(int id, Entry newEntry);
+    void CreateEntry(string name, int age, string vaccineType, bool vaccinated);
     // Function to check the vaccination status of a given entry
-    bool CheckVaccineStatus(int id);
+    bool CheckVaccineStatus(string name);
     // Function to delete an entry from the entries vector or waiting list
-    void DeleteEntry(int id);
-    // Function to show a certain entry
-    void ShowEntry(int id);
+    void DeleteEntry(string name);
     // Function to show all entries and waiting list
     void ShowAll();
     // Function to write the entries and waiting list to a CSV file
