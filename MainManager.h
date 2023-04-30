@@ -17,10 +17,6 @@ public:
     int age;
     char gender;
     string vaccineType;
-    bool firstDose;
-    string firstDoseDate;
-    bool secondDose;
-    string secondDoseDate;
 };
 
 class MainManager {

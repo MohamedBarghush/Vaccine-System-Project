@@ -1,11 +1,12 @@
 #pragma once
 #include <string>
 #include <iostream>
+#include"MainManager.h"
 
 using namespace std;
 
-class User {
-private:
+class User:MainManager {
+public:
     string fullName;
     int id;
     string password;
@@ -13,7 +14,6 @@ private:
     int age;
     char gender;
     bool vaccinated;
-public:
     User(string fullName, int id, string password, string government, int age, char gender, bool vaccinated) {
         this->fullName = fullName;
         this->id = id;
@@ -24,9 +24,10 @@ public:
         this->vaccinated = vaccinated;
     };
 
-    void display();
-
-    void edit(string fullName, string password, string government, int age, char gender, bool vaccinated);
-
-    void deleteUser();
+//Inherited Functions From Main Manager
+    void CreateEntry() {};
+    bool EditEntry(int id) {};
+    void DeleteEntry(int id) {};
+    Entry ShowEntry(int id) {};
+    bool ShowVaccineStatue(int id) {};
 };
