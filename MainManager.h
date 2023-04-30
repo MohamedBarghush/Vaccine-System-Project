@@ -24,7 +24,7 @@ public:
 };
 
 class MainManager {
-private:
+protected:
     unordered_map<int, Entry> entries; // Map to store the entries
     queue<Entry> waitingList; // Queue to store the entries waiting for vaccination
 
@@ -37,6 +37,8 @@ public:
     bool CheckVaccineStatus(int id);
     // Function to delete an entry from the entries vector or waiting list
     void DeleteEntry(int id);
+    // Function to delete all the entries everywhere
+    void Delete_All();
     // Function to show a certain entry
     void ShowEntry(int id);
     // Function to show all entries and waiting list
