@@ -7,7 +7,8 @@ void Admin::Delete(int ID)
 
 void Admin::DeleteAll()
 {
-	
+    Delete_All();
+    SaveEntriesToFile("TestingCases.csv");
 }
 
 void Admin::ViewAll()
