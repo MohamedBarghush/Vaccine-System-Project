@@ -2,7 +2,5 @@
 
 class Admin {
 public:
-	void Delete(int ID);
-	void ViewAll();
-	void ViewOne(int ID);
+	int static password = "Admin_1234";
 };

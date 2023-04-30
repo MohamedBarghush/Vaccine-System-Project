@@ -6,9 +6,27 @@
 #include <queue>
 #include <stack>
 #include "mainManager.h"
+#include"Admin.h"
 
 using namespace std;
-
+void MainManager::Start()
+{
+    cout << "Welcome To Our Vacccine Tracking System \n";
+    
+    cout << "If You Are Admin Write Admin if you are User Type User \n";
+    cout<<"Case Doesnt Mater "
+}
+bool MainManager::Check_Admin(string s)
+{
+    if (s == Admin::password)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
 // Function to create a new entry and add it to the entries vector or waiting list
 void MainManager::CreateEntry(string name, int id, string government, int age, char gender, string vaccineType, bool firstDose, string firstDate, bool secondDose, string secondDate) {
     Entry newEntry = { name, id, government, age, gender, vaccineType, firstDose, firstDate, secondDose, secondDate };

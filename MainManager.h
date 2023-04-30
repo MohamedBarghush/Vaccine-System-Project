@@ -25,6 +25,9 @@ private:
     queue<Entry> waitingList; // Queue to store the entries waiting for vaccination
 
 public:
+    void Start();
+
+    void Check_Admin();
     // Function to create a new entry and add it to the entries vector or waiting list
     void CreateEntry(string name, int id, string government, int age, char gender, string vaccineType, bool firstDose, string firstDate, bool secondDose, string secondDate);
     // Function to edit an entry and add it to the waiting list if not fully vaccinated
