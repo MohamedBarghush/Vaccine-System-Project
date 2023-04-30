@@ -1,6 +1,14 @@
 #pragma once
+#include <iostream>
+#include <string>
+
+using namespace std;
 
 class Admin {
 public:
-	int static password = "Admin_1234";
+	/*static string password;
+
+	Admin() {
+		password = "Admin_1234";
+	}*/
 };

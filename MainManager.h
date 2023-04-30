@@ -17,6 +17,10 @@ public:
     int age;
     char gender;
     string vaccineType;
+    bool firstDose;
+    string firstDoseDate;
+    bool secondDose;
+    string secondDoseDate;
 };
 
 class MainManager {
@@ -25,9 +29,6 @@ private:
     queue<Entry> waitingList; // Queue to store the entries waiting for vaccination
 
 public:
-    void Start();
-
-    void Check_Admin();
     // Function to create a new entry and add it to the entries vector or waiting list
     void CreateEntry(string name, int id, string government, int age, char gender, string vaccineType, bool firstDose, string firstDate, bool secondDose, string secondDate);
     // Function to edit an entry and add it to the waiting list if not fully vaccinated
@@ -44,4 +45,8 @@ public:
     void SaveEntriesToFile(string filename);
     // Function to load entries and waiting list from a CSV file
     void LoadEntriesFromFile(string filename);
+
+    // Main Menu Functions
+    void Start();
+    bool Check_Admin(string s);
 };
