@@ -6,9 +6,9 @@ using namespace std;
 
 class Admin {
 public:
-	/*static string password;
+	static string password;
 
 	Admin() {
 		password = "Admin_1234";
-	}*/
+	}
 };

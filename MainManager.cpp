@@ -12,23 +12,154 @@ using namespace std;
 void MainManager::Start()
 {
     cout << "Welcome To Our Vacccine Tracking System \n";
-
     cout << "If You Are Admin Write Admin if you are User Type User \n";
-    cout << "Case Doesnt Mater ";
+    cout << "Case Doesnt Mater:\n ";
+    string s;
+    cin >> s;
+    if (s == "admin")
+    {
+        cout << "Enter The Admin Password\n";
+        string pass;
+        cin >> pass;
+        cout << "You Have 3 Attemps\n";
+        bool flag = true;
+        int count = 0;
+        while (!Check_Admin(pass))
+        {
+            cout << "The Password is not correct try again\n";
+            count++;
+            if (count == 3)
+            {
+                flag = false;
+                break;
+            }
+        }
+        if (!flag)
+        {
+            return;
+        }
+        int choice;
+        cout << "To View all Records Press 1:\n";
+        cout << "To View specific Record Press 2:\n";
+        cout << "To Delete all Records Press 3:\n";
+        cout << "To Delete specific Record Press 4:\n";
+        cin >> choice;
+
+        if(choice== 1)
+        {
+            ShowAll();
+        }
+        else if(choice== 2)
+        {
+            cout << "Enter The Id of the Record to Show\n";
+            int id; cin >> id;
+            ShowEntry(id);
+        }
+        else if(choice==3){
+            //Delete_All();
+        }
+        else if(choice== 4)        {
+            cout << "Enter The Id of the Record to Delete \n";
+            int id; cin >> id;
+            DeleteEntry(id);
+        }
+    }
+    else if (s == "user")
+    {
+        int choice;
+        cout << "To Create New Entry Press 1:\n";
+        cout << "To View Your Data Press 2:\n";
+        cout << "To Edit Your Record Press 3:\n";
+        cout << "To Delete Your Record Press 4:\n";
+        cin >> choice;
+        if(choice==1)
+        {
+            string name, government, vaccineType, firstDate, secondDate;
+            int id, age;
+            char gender;
+            bool firstDose, secondDose;
+            cout << "Enter Your Name:\n";
+            cin >> name;
+            cout << "Enter Your Government:\n";
+            cin >> government;
+            cout << "Enter Your VaccineType:\n";
+            cin >> vaccineType;
+            cout << "Enter Your FirstDate:\n";
+            cin >> firstDate;
+            cout << "Enter Your SecondDate:\n";
+            cin >> secondDate;
+            cout << "Enter Your Id:\n";
+            cin >> id;
+            cout << "Enter Your Age:\n";
+            cin >> age;
+            cout << "Enter Your Gender:\n";
+            cin >> gender;
+            cout << "Enter Your firstDose 1 for yes 0 for no :\n";
+            cin >> firstDose;
+            cout << "Enter Your secondDose 1 for yes 0 for no:\n";
+            cin >> secondDose;
+            CreateEntry(name, id, government, age, gender, vaccineType, firstDose, firstDate, secondDose, secondDate);
+        }
+        else if(choice== 2)
+        {
+            cout << "Enter Your Id to Veiw Your Data\n";
+            int id1; cin >> id1;
+            ShowEntry(id1);
+        }
+        else if(choice== 3)
+        {
+            cout << "Enter The Data of The new Entry:\n";
+            string name, government, vaccineType, firstDate, secondDate;
+            int id2, age;
+            char gender;
+            bool firstDose, secondDose;
+            cout << "Enter Your Name:\n";
+            cin >> name;
+            cout << "Enter Your Government:\n";
+            cin >> government;
+            cout << "Enter Your VaccineType:\n";
+            cin >> vaccineType;
+            cout << "Enter Your FirstDate:\n";
+            cin >> firstDate;
+            cout << "Enter Your SecondDate:\n";
+            cin >> secondDate;
+            cout << "Enter Your Id:\n";
+            cin >> id2;
+            cout << "Enter Your Age:\n";
+            cin >> age;
+            cout << "Enter Your Gender:\n";
+            cin >> gender;
+            cout << "Enter Your firstDose 1 for yes 0 for no :\n";
+            cin >> firstDose;
+            cout << "Enter Your secondDose 1 for yes 0 for no:\n";
+            cin >> secondDose;
+            Entry newEntry = { name, id2, government, age, gender, vaccineType, firstDose, firstDate, secondDose, secondDate };
+            EditEntry(id2, newEntry);
+        }
+        else if(choice==4)
+        {
+            cout << "Enter Your Id to Delete Your Data\n";
+            int id3; cin >> id3;
+            DeleteEntry(id3);
+        }
+    }
+    else {
+    cout << "Invalid Option\n";
+    }
 }
 
 bool MainManager::Check_Admin(string s)
 {
-    //if (s == Admin::password)
-    /*{
+    if (s == Admin::password)
+    {
         return true;
     }
     else
     {
         return false;
-    }*/
-    return false;
+    }
 }
+
 // Function to create a new entry and add it to the entries vector or waiting list
 void MainManager::CreateEntry(string name, int id, string government, int age, char gender, string vaccineType, bool firstDose, string firstDate, bool secondDose, string secondDate) {
     Entry newEntry = { name, id, government, age, gender, vaccineType, firstDose, firstDate, secondDose, secondDate };
