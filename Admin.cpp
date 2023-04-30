@@ -99,6 +99,7 @@ float Admin::ViewStatistics()
     char input;
     cout << "Type F To see the The Amount of People Who Recieved The first Dose only Or Type B to see the Amount of People Who Recieved Both Doses Or Type G To See the Amount of Males and Females on The System" << endl;
     cin >> input;
+    //Function To See the Amount of People Who Recieved the First Dose Only
     if (input == 'F' || input == 'f')
     {
         
@@ -113,6 +114,7 @@ float Admin::ViewStatistics()
         tempList.~queue();
         return (temp / entries.size());
     }
+    //Function to see the Amount of People Who Recieved Both Doses
     else if (input == 'B' || input == 'b')
     {
         for (pair<int, Entry> entry : entries) {
@@ -123,6 +125,7 @@ float Admin::ViewStatistics()
         }
         return (temp / entries.size());
     }
+    //Function to See the Amount of Males and Females In the System
     else if (input == 'G' || input == 'g')
     {
         for (pair<int, Entry> entry : entries) {
@@ -157,6 +160,11 @@ float Admin::ViewStatistics()
         }
         tempList2.~queue();
         return (females / entries.size());
+    }
+    //If the Character is wrong
+    else
+    {
+        cout << "Please Re-Enter The Character Again";
     }
 
 }
