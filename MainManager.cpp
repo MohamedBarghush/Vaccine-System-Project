@@ -118,7 +118,6 @@ void MainManager::DeleteEntry(int id) {
 // Function to show a certain entry
 void MainManager::ShowEntry(int id) {
     auto it = entries.find(id);
-    bool found = false;
     if (it != entries.end()) {
         cout << "\n" << "Entry: \nName: " << it->second.name << "\n"
             << "ID: " << it->second.id << "\n"
@@ -151,7 +150,6 @@ void MainManager::ShowEntry(int id) {
             tempQueue.pop();
         }
     }
-    cout << "Invalid ID!!!" << endl;
     tempQueue.~queue();
 }
 
