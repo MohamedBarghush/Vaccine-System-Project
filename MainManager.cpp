@@ -61,7 +61,7 @@ void MainManager::Start()
         cout << "To Delete specific Record Press 4:\n";
         cout << "To View records filtered by the number of doses (one dose and two doses) Press 5:\n";
         cout << "To View records of vaccinated users ordered by the age of the user Press 6:\n";
-        cout << "To View the record of the user that needs to be vaccinated from the waiting list Press 7:";
+        cout << "To View the record of the user that needs to be vaccinated from the waiting list Press 7:\n";
         cout << "To View Basic statistics Press 8:\n";
         cin >> choice;
         while (choice < 1 && choice>8)
