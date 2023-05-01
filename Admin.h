@@ -3,6 +3,8 @@
 #include <queue>
 class Admin : public MainManager {
 public:
+    string password;
+    Admin();
     void Delete(int ID);
     void DeleteAll();
     void ViewAll();
