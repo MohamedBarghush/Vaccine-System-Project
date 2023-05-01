@@ -24,7 +24,7 @@ public:
 };
 
 class MainManager {
-private:
+protected:
     unordered_map<int, Entry> entries; // Map to store the entries
     queue<Entry> waitingList; // Queue to store the entries waiting for vaccination
 
