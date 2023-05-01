@@ -53,17 +53,31 @@ void MainManager::Start()
         {
             return;
         }
+        Admin a1;
         int choice;
+
         cout << "To View all Records Press 1:\n";
         cout << "To View specific Record Press 2:\n";
         cout << "To Delete all Records Press 3:\n";
         cout << "To Delete specific Record Press 4:\n";
-        //cout << "To View records filtered by the number of doses (one dose and two doses) Press 5:\n";
-        //cout << "To View records of vaccinated users ordered by the age of the user Press 6:\n";
-        //cout << "To View the record of the user that needs to be vaccinated from the waiting list Press 7:";
-        //cout << "To View Basic statistics Press 8:\n";
-        cin >> choice;
+        cout << "To View records filtered by the number of doses (one dose and two doses) Press 5:\n";
+        cout << "To View records of vaccinated users ordered by the age of the user Press 6:\n";
+        cout << "To View the record of the user that needs to be vaccinated from the waiting list Press 7:";
+        cout << "To View Basic statistics Press 8:\n";
+        while (choice < 1 && choice>8)
+        {
+            cout << "Invalid Option Please try Again\n";
 
+            cout << "To View all Records Press 1:\n";
+            cout << "To View specific Record Press 2:\n";
+            cout << "To Delete all Records Press 3:\n";
+            cout << "To Delete specific Record Press 4:\n";
+            cout << "To View records filtered by the number of doses (one dose and two doses) Press 5:\n";
+            cout << "To View records of vaccinated users ordered by the age of the user Press 6:\n";
+            cout << "To View the record of the user that needs to be vaccinated from the waiting list Press 7:";
+            cout << "To View Basic statistics Press 8:\n";
+            cin >> choice;
+        }
         if(choice== 1)
         {
             ShowAll();
@@ -75,12 +89,25 @@ void MainManager::Start()
             ShowEntry(id);
         }
         else if(choice==3){
-            //Delete_All();
+            Delete_All();
         }
         else if(choice== 4)        {
             cout << "Enter The Id of the Record to Delete \n";
             int id; cin >> id;
             DeleteEntry(id);
+        }
+        else if (choice == 5) {
+            a1.ViewDosesRecord();
+        }
+        else if (choice == 6) {
+            a1.ViewOrderedByAge();
+        }
+        else if (choice == 7) {
+            a1.ViewWaitingList();
+        }
+        else if (choice == 8) {
+            cout << "The Statistics are:\n";
+            cout<<a1.ViewStatistics()<<"\n";
         }
     }
     else if (s == "user")
