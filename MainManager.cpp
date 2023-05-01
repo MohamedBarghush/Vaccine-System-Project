@@ -25,6 +25,7 @@ void MainManager::MainMenu()
 }
 void MainManager::Start()
 {
+    Admin a1;
     cout << "Welcome To Our Vacccine Tracking System \n";
     cout << "If You Are Admin Write Admin if you are User Type User \n";
     cout << "Case Doesnt Mater:\n";
@@ -53,7 +54,6 @@ void MainManager::Start()
         {
             return;
         }
-        Admin a1;
         int choice;
         cout << "To View all Records Press 1:\n";
         cout << "To View specific Record Press 2:\n";
