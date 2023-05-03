@@ -178,6 +178,7 @@ void MainManager::Start()
     else {
     cout << "Invalid Option\n";
     }
+    SaveEntriesToFile("TestingCases.csv");
 }
 
 bool MainManager::Check_Admin(string s)
