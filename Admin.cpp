@@ -1,7 +1,9 @@
 #include "Admin.h"
 
-Admin::Admin()
+Admin::Admin(unordered_map<int,Entry> a , queue<Entry> q)
 {
+    entries = a;
+    waitingList = q;
     password = "Admin_1234";
 }
 
@@ -73,29 +75,14 @@ void Admin::ViewOrderedByAge() {
 
 void Admin::ViewWaitingList()
 {
-    cout << "Waiting list:\n";
-    queue<Entry> tempQueue = waitingList;
-    int i = 1;
-    while (!tempQueue.empty()) {
-        Entry entry = tempQueue.front();
-        cout << "\n" << i << ". Name: " << entry.name << "\n"
-            << "ID: " << entry.id << "\n"
-            << "Government: " << entry.government << "\n"
-            << "Age: " << entry.age << "\n"
-            << "Gender: " << entry.gender << "\n"
-            << "Vaccine Type: " << entry.vaccineType << "\n"
-            << "Vaccinated First Dose: " << (entry.firstDose ? "Yes, on " + entry.firstDoseDate : "No") << "\n"
-            << "Vaccinated Second Dose: " << (entry.secondDose ? "Yes, on " + entry.secondDoseDate : "No") << "\n\n";
-        tempQueue.pop();
-        i++;
-    }
-    tempQueue.~queue();
+    ShowWaitingList();
 }
 
 void Admin::ViewDosesRecord() {
     char input;
-    cout << "Enter 1 to view records of people who received one dose only" << endl;
-    cout << "Enter 2 to view records of people who received both doses" << endl;
+    system("CLS");
+    cout << "Enter 1 to view records of people who received one dose only \n"
+    << "Enter 2 to view records of people who received both doses" << endl;
     cin >> input;
     vector<Entry> records;
     // Filter records based on the number of doses
@@ -119,7 +106,9 @@ void Admin::ViewDosesRecord() {
             if (entry.second.firstDose && entry.second.secondDose) {
                 records.push_back(entry.second);
             }
+
         }
+
     }
     // Sort records by ID
     sort(records.begin(), records.end(), [](Entry a, Entry b) {
@@ -145,7 +134,8 @@ float Admin::ViewStatistics()
     int males = 0;
     int females = 0;
     char input;
-    cout << "Type F To see the The Amount of People Who Recieved The first Dose only Or Type B to see the Amount of People Who Recieved Both Doses Or Type G To See the Amount of Males and Females on The System" << endl;
+    system("CLS");
+    cout << "- Type F To see the The Amount of People Who Recieved The first Dose only  \n- Type B to see the Amount of People Who Recieved Both Doses \n- Type G To See the Amount of Males and Females on The System" << endl;
     cin >> input;
     //Function To See the Amount of People Who Recieved the First Dose Only
     if (input == 'F' || input == 'f')

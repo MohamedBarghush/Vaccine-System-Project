@@ -25,7 +25,8 @@ void MainManager::MainMenu()
 }
 void MainManager::Start()
 {
-    Admin a1;
+    LoadEntriesFromFile("TestingCases.csv");
+    Admin a1(entries,waitingList);
     cout << "Welcome To Our Vacccine Tracking System \n";
     cout << "If You Are Admin Write Admin if you are User Type User \n";
     cout << "Case Doesnt Mater:\n";
@@ -106,20 +107,20 @@ void MainManager::Start()
         cin >> choice;
         if(choice==1)
         {
-            string name, government, vaccineType, firstDate, secondDate;
+            string name, government, vaccineType, firstDate = "", secondDate = "";
             int id, age;
             char gender;
             bool firstDose, secondDose;
             cout << "Enter Your Name:\n";
-            cin >> name;
+            cin.ignore();
+            getline(cin, name);
+            //cin.getline(name, 40);
             cout << "Enter Your Government:\n";
-            cin >> government;
+            //cin.ignore();
+            getline(cin, government);
             cout << "Enter Your VaccineType:\n";
-            cin >> vaccineType;
-            cout << "Enter Your FirstDate:\n";
-            cin >> firstDate;
-            cout << "Enter Your SecondDate:\n";
-            cin >> secondDate;
+            //cin.ignore();
+            getline(cin, vaccineType);
             cout << "Enter Your Id:\n";
             cin >> id;
             cout << "Enter Your Age:\n";
@@ -128,9 +129,18 @@ void MainManager::Start()
             cin >> gender;
             cout << "Enter Your firstDose 1 for yes 0 for no :\n";
             cin >> firstDose;
+            if (firstDose == 1) {
+                cout << "Enter Your FirstDate:\n";
+                cin >> firstDate;
+            }
             cout << "Enter Your secondDose 1 for yes 0 for no:\n";
             cin >> secondDose;
+            if (secondDose == 1) {
+                cout << "Enter Your SecondDate:\n";
+                cin >> secondDate;
+            }
             CreateEntry(name, id, government, age, gender, vaccineType, firstDose, firstDate, secondDose, secondDate);
+            SaveEntriesToFile("TestingCases.csv");
         }
         else if(choice== 2)
         {
@@ -146,7 +156,7 @@ void MainManager::Start()
             char gender;
             bool firstDose, secondDose;
             cout << "Enter Your Name:\n";
-            cin >> name;
+            getline(cin, name);
             cout << "Enter Your Government:\n";
             cin >> government;
             cout << "Enter Your VaccineType:\n";
@@ -165,8 +175,27 @@ void MainManager::Start()
             cin >> firstDose;
             cout << "Enter Your secondDose 1 for yes 0 for no:\n";
             cin >> secondDose;
+
+            /*stringstream ss(line);
+            getline(ss, name, ',');
+            cout << name << endl;
+            system("pause");
+
+            ss >> id;
+            getline(ss, government, ',');
+            ss >> age;
+            ss >> genderChar;
+            getline(ss, vaccineType, ',');
+            getline(ss, firstDoseStr, ',');
+            getline(ss, firstDateStr, ',');
+            getline(ss, secondDoseStr, ',');
+            getline(ss, secondDateStr, ',');
+            bool firstDose = (firstDoseStr == "Yes");
+            bool secondDose = (secondDoseStr == "Yes");*/
+
             Entry newEntry = { name, id2, government, age, gender, vaccineType, firstDose, firstDate, secondDose, secondDate };
             EditEntry(id2, newEntry);
+            SaveEntriesToFile("TestingCases.csv");
         }
         else if(choice==4)
         {
@@ -178,12 +207,11 @@ void MainManager::Start()
     else {
     cout << "Invalid Option\n";
     }
-    SaveEntriesToFile("TestingCases.csv");
 }
 
 bool MainManager::Check_Admin(string s)
 {
-    Admin A1;
+    Admin A1(entries, waitingList);
     if (s == A1.password)
     {
         return true;
@@ -380,6 +408,42 @@ void MainManager::ShowAll() {
     }
 }
 
+// Function to show all the netries in the waiting lists
+void MainManager::ShowWaitingList() {
+    cout << "Waiting list:\n";
+    queue<Entry> tempQueue = waitingList;
+    int i = 1;
+    while (!tempQueue.empty()) {
+        Entry entry = tempQueue.front();
+        cout << "\n" << i << ". Name: " << entry.name << "\n"
+            << "ID: " << entry.id << "\n"
+            << "Government: " << entry.government << "\n"
+            << "Age: " << entry.age << "\n"
+            << "Gender: " << entry.gender << "\n"
+            << "Vaccine Type: " << entry.vaccineType << "\n"
+            << "Vaccinated First Dose: " << (entry.firstDose ? "Yes, on " + entry.firstDoseDate : "No") << "\n"
+            << "Vaccinated Second Dose: " << (entry.secondDose ? "Yes, on " + entry.secondDoseDate : "No") << "\n\n";
+        tempQueue.pop();
+        i++;
+    }
+    tempQueue.~queue();
+}
+
+// Function to show all the entries in the entries map
+void MainManager::ShowEntriesMap() {
+    cout << "Entries:\n";
+    for (auto& entry : entries) {
+        cout << "\n" << "Name: " << entry.second.name << "\n"
+            << "ID: " << entry.second.id << "\n"
+            << "Government: " << entry.second.government << "\n"
+            << "Age: " << entry.second.age << "\n"
+            << "Gender: " << entry.second.gender << "\n"
+            << "Vaccine Type: " << entry.second.vaccineType << "\n"
+            << "Vaccinated First Dose: " << (entry.second.firstDose ? "Yes, on " + entry.second.firstDoseDate : "No") << "\n"
+            << "Vaccinated Second Dose: " << (entry.second.secondDose ? "Yes, on " + entry.second.secondDoseDate : "No") << "\n\n";
+    }
+}
+
 // Function to write the entries and waiting list to a CSV file
 void MainManager::SaveEntriesToFile(string filename) {
     ofstream file(filename);
@@ -424,32 +488,37 @@ void MainManager::LoadEntriesFromFile(string filename) {
     while (!waitingList.empty()) {
         waitingList.pop();  // Clear existing waiting list
     }
-    ifstream file(filename);
-    if (file.is_open()) {
-        string line, name, government, vaccineType, firstDoseStr, firstDateStr, secondDoseStr, secondDateStr;
-        int id, age;
-        char genderChar;
-        getline(file, line);  // Skip the header row
-        while (getline(file, line)) {
-            stringstream ss(line);
-            getline(ss, name, ',');
-            ss >> id;
-            getline(ss, government, ',');
-            ss >> age;
-            ss >> genderChar;
-            getline(ss, vaccineType, ',');
-            getline(ss, firstDoseStr, ',');
-            getline(ss, firstDateStr, ',');
-            getline(ss, secondDoseStr, ',');
-            getline(ss, secondDateStr, ',');
-            bool firstDose = (firstDoseStr == "Yes");
-            bool secondDose = (secondDoseStr == "Yes");
-            CreateEntry(name, id, government, age, genderChar, vaccineType, firstDose, firstDateStr, secondDose, secondDateStr);
+    vector<vector<string>> data;
+
+    ifstream infile(filename);
+
+    // Check if file is open
+    if (!infile.is_open()) {
+        cerr << "Failed to open file: " << filename << endl;
+        return;
+    }
+
+    string line;
+
+    // Read header row
+    getline(infile, line);
+
+    // Read data rows
+    while (getline(infile, line)) {
+        vector<string> row;
+        string field;
+        stringstream ss(line);
+
+        for (int i = 0; i <= 9; i++) {
+            getline(ss, field, ',');
+            row.push_back(field);
         }
-        file.close();
-        cout << "Entries loaded from file: " << filename << "\n";
+        CreateEntry(row[0], stoi(row[1]), row[2], stoi(row[3]), row[4][0], row[5], row[6] != "", row[7], row[8] != "", row[9]);
     }
-    else {
-        cout << "Error: Unable to open file: " << filename << "\n";
-    }
+
+    infile.close();
+
+    cout << "Entries loaded from file: " << filename << "\n";
 }
+
+

@@ -4,7 +4,7 @@
 class Admin : public MainManager {
 public:
     string password;
-    Admin();
+    Admin(unordered_map<int, Entry> a , queue<Entry> q);
     void Delete(int ID);
     void DeleteAll();
     void ViewAll();
