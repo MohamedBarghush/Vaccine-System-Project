@@ -32,6 +32,9 @@ void MainManager::Start()
     cout << "Case Doesnt Mater:\n";
     string s;
     cin >> s;
+    for (auto& c : s) {
+        c = tolower(c);
+    }
     if (s == "admin")
     {
         cout <<"Enter The Admin Password\n";
@@ -517,8 +520,6 @@ void MainManager::LoadEntriesFromFile(string filename) {
     }
 
     infile.close();
-
-    cout << "Entries loaded from file: " << filename << "\n";
 }
 
 
