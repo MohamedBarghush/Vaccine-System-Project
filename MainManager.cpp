@@ -70,21 +70,21 @@ void MainManager::Start()
         cin >> choice;
         if(choice== 1)
         {
-            ShowAll();
+            a1.ViewAll();
         }
         else if(choice== 2)
         {
             cout << "Enter The Id of the Record to Show\n";
             int id; cin >> id;
-            ShowEntry(id);
+            a1.ViewOne(id);
         }
         else if(choice==3){
-            Delete_All();
+            a1.DeleteAll();
         }
         else if(choice== 4)        {
             cout << "Enter The Id of the Record to Delete \n";
             int id; cin >> id;
-            DeleteEntry(id);
+            a1.Delete(id);
         }
         else if (choice == 5) {
             a1.ViewDosesRecord();
@@ -97,7 +97,7 @@ void MainManager::Start()
         }
         else if (choice == 8) {
             cout << "The Statistics are:\n";
-            cout<<a1.ViewStatistics()<<"\n";
+            a1.ViewStatistics();
         }
     }
     else if (s == "user")
@@ -396,8 +396,9 @@ void MainManager::ShowAll() {
     }
     cout << "Waiting list:\n";
     int i = 1;
-    while (!waitingList.empty()) {
-        Entry entry = waitingList.front();
+    queue<Entry> tempQue = waitingList;
+    while (!tempQue.empty()) {
+        Entry entry = tempQue.front();
         cout << "\n" << i << ". Name: " << entry.name << "\n"
             << "ID: " << entry.id << "\n"
             << "Government: " << entry.government << "\n"
@@ -406,9 +407,10 @@ void MainManager::ShowAll() {
             << "Vaccine Type: " << entry.vaccineType << "\n"
             << "Vaccinated First Dose: " << (entry.firstDose ? "Yes, on " + entry.firstDoseDate : "No") << "\n"
             << "Vaccinated Second Dose: " << (entry.secondDose ? "Yes, on " + entry.secondDoseDate : "No") << "\n\n";
-        waitingList.pop();
+        tempQue.pop();
         i++;
     }
+    tempQue.~queue();
 }
 
 // Function to show all the netries in the waiting lists
@@ -449,6 +451,10 @@ void MainManager::ShowEntriesMap() {
 
 // Function to write the entries and waiting list to a CSV file
 void MainManager::SaveEntriesToFile(string filename) {
+    if (entries.size() < 1) {
+        ofstream file(filename);
+        file << "";
+    }
     ofstream file(filename);
     file << "Name,ID,Government,Age,Gender,Vaccine Type,First Dose,First Date,Second Dose,Second Date\n";  // Write the header row
     for (pair<int, Entry> entry : entries) {
@@ -509,14 +515,17 @@ void MainManager::LoadEntriesFromFile(string filename) {
     // Read data rows
     while (getline(infile, line)) {
         vector<string> row;
-        string field;
+        
         stringstream ss(line);
 
         for (int i = 0; i <= 9; i++) {
+            string field= "";
             getline(ss, field, ',');
             row.push_back(field);
         }
-        CreateEntry(row[0], stoi(row[1]), row[2], stoi(row[3]), row[4][0], row[5], row[6] != "", row[7], row[8] != "", row[9]);
+        //cout << row[0] << "," << row[1] << "," << row[2] << "," << row[3] << "," << row[4] << "," << row[5] << "," << row[6] << "," << row[7] << "," << row[8] << "," << row[9] << endl;
+        //cout << (row[6] == "Yes") << endl;
+        CreateEntry(row[0], stoi(row[1]), row[2], stoi(row[3]), row[4][0], row[5], row[6] == "Yes", row[7], row[8] == "Yes", row[9]);
     }
 
     infile.close();
