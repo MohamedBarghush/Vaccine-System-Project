@@ -12,5 +12,5 @@ public:
     void ViewOrderedByAge();
     void ViewWaitingList();
     void ViewDosesRecord();
-    float ViewStatistics();
+    void ViewStatistics();
 };

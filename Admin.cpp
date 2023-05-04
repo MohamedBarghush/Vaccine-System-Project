@@ -118,9 +118,10 @@ void Admin::ViewDosesRecord() {
     }
 }
 
-float Admin::ViewStatistics()
+void Admin::ViewStatistics()
 {
     int temp = 0;
+    int allDoses = 0;
     int males = 0;
     int females = 0;
     char input;
@@ -140,7 +141,8 @@ float Admin::ViewStatistics()
             tempList.pop();
         }
         tempList.~queue();
-        return (temp / entries.size());
+        cout << "The number of people that took the first dose only is: " << temp << endl;
+        return;
     }
     //Function to see the Amount of People Who Recieved Both Doses
     else if (input == 'B' || input == 'b')
@@ -148,46 +150,48 @@ float Admin::ViewStatistics()
         for (pair<int, Entry> entry : entries) {
             if (entry.second.firstDose == true && entry.second.secondDose == true)
             {
-                temp++;
+                allDoses++;
             }
         }
-        return (temp / entries.size());
+        cout << "The number of people that took the two doses is: " << allDoses << endl;
+        return;
     }
     //Function to See the Amount of Males and Females In the System
     else if (input == 'G' || input == 'g')
     {
         for (pair<int, Entry> entry : entries) {
-            if (entry.second.age == 'M' || entry.second.age == 'm')
+            if (entry.second.gender == 'M' || entry.second.gender == 'm')
             {
                 males++;
             }
         }
         queue<Entry> tempList = waitingList;
         while (!tempList.empty()) {
-            if (tempList.front().age == 'M' || tempList.front().age == 'm')
+            if (tempList.front().gender == 'M' || tempList.front().gender == 'm')
             {
                 males++;
             }
             tempList.pop();
         }
         tempList.~queue();
-        return (males / entries.size());
         for (pair<int, Entry> entry : entries) {
-            if (entry.second.age == 'F' || entry.second.age == 'f')
+            if (entry.second.gender == 'F' || entry.second.gender == 'f')
             {
                 females++;
             }
         }
         queue<Entry> tempList2 = waitingList;
         while (!tempList2.empty()) {
-            if (tempList2.front().age == 'F' || tempList2.front().age == 'f')
+            if (tempList2.front().gender == 'F' || tempList2.front().gender == 'f')
             {
                 females++;
             }
             tempList2.pop();
         }
         tempList2.~queue();
-        return (females / entries.size());
+        int returnValues[2] = { males, females };
+        cout << "The number of males is: " << males << endl << "The number of females is: " << females << endl;
+        return;
     }
     //If the Character is wrong
     else
