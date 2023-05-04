@@ -51,7 +51,8 @@ public:
     void SaveEntriesToFile(string filename);
     // Function to load entries and waiting list from a CSV file
     void LoadEntriesFromFile(string filename);
-    
+    //Function To Check if the ID IS Entered Before
+    bool CheckID(int id);
 
     // Main Menu Functions
     void MainMenu();

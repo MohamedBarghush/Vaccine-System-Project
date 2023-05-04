@@ -18,5 +18,6 @@ int main()
 	//for (unordered_map<int, Entry>::iterator i = mainManager.entries.begin(); i != mainManager.entries.end(); i++)
 	//	cout << i->second.name << i->second.age;
 	mainManager.MainMenu();
+
 	return 0;
 }

@@ -126,6 +126,12 @@ void MainManager::Start()
             getline(cin, vaccineType);
             cout << "Enter Your Id:\n";
             cin >> id;
+            while (CheckID(id))
+            {
+                cout << "This Id Has Been Entered Before The Id Must Be Unique\n";
+                cout << "Please enter The Correct Id\n";
+                cin >> id;
+            }
             cout << "Enter Your Age:\n";
             cin >> age;
             cout << "Enter Your Gender:\n";
@@ -520,6 +526,25 @@ void MainManager::LoadEntriesFromFile(string filename) {
     }
 
     infile.close();
+}
+
+bool MainManager::CheckID(int id)
+{
+    bool found1 = false, found2 = false;
+    queue<Entry> tempwaitingList = waitingList;
+    if (entries.find(id) != entries.end()) {
+        found1 = true;
+    }
+    while (!tempwaitingList.empty())
+    {
+        Entry entry = tempwaitingList.front();
+        if (entry.id == id)
+        {
+            found2 = true;
+            break;
+        }
+    }
+    return found1||found2;
 }
 
 
