@@ -5,7 +5,7 @@
 #include <unordered_map>
 #include <queue>
 #include <stack>
-#include "mainManager.h"
+#include "MainManager.h"
 #include"Admin.h"
 
 using namespace std;
