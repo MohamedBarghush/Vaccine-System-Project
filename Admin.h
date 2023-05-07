@@ -3,6 +3,8 @@
 #include <queue>
 class Admin : public MainManager {
 public:
+    string password;
+    Admin(unordered_map<int, Entry> a , queue<Entry> q);
     void Delete(int ID);
     void DeleteAll();
     void ViewAll();
@@ -10,5 +12,5 @@ public:
     void ViewOrderedByAge();
     void ViewWaitingList();
     void ViewDosesRecord();
-    float ViewStatistics();
+    void ViewStatistics();
 };

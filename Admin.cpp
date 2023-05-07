@@ -1,8 +1,16 @@
 #include "Admin.h"
 
+
+Admin::Admin(unordered_map<int,Entry> a , queue<Entry> q)
+{
+    entries = a;
+    waitingList = q;
+    password = "Admin_1234";
+}
+
 void Admin::Delete(int ID)
 {
-	DeleteEntry(ID);
+    DeleteEntry(ID);
 }
 
 void Admin::DeleteAll()
@@ -13,17 +21,7 @@ void Admin::DeleteAll()
 
 void Admin::ViewAll()
 {
-    cout << "Entries:\n";
-    for (auto& entry : entries) {
-        cout << "\n" << "Name: " << entry.second.name << "\n"
-            << "ID: " << entry.second.id << "\n"
-            << "Government: " << entry.second.government << "\n"
-            << "Age: " << entry.second.age << "\n"
-            << "Gender: " << entry.second.gender << "\n"
-            << "Vaccine Type: " << entry.second.vaccineType << "\n"
-            << "Vaccinated First Dose: " << (entry.second.firstDose ? "Yes, on " + entry.second.firstDoseDate : "No") << "\n"
-            << "Vaccinated Second Dose: " << (entry.second.secondDose ? "Yes, on " + entry.second.secondDoseDate : "No") << "\n\n";
-    }
+    ShowAll();
 }
 
 void Admin::ViewOne(int ID)
@@ -68,29 +66,14 @@ void Admin::ViewOrderedByAge() {
 
 void Admin::ViewWaitingList()
 {
-    cout << "Waiting list:\n";
-    queue<Entry> tempQueue = waitingList;
-    int i = 1;
-    while (!tempQueue.empty()) {
-        Entry entry = tempQueue.front();
-        cout << "\n" << i << ". Name: " << entry.name << "\n"
-            << "ID: " << entry.id << "\n"
-            << "Government: " << entry.government << "\n"
-            << "Age: " << entry.age << "\n"
-            << "Gender: " << entry.gender << "\n"
-            << "Vaccine Type: " << entry.vaccineType << "\n"
-            << "Vaccinated First Dose: " << (entry.firstDose ? "Yes, on " + entry.firstDoseDate : "No") << "\n"
-            << "Vaccinated Second Dose: " << (entry.secondDose ? "Yes, on " + entry.secondDoseDate : "No") << "\n\n";
-        tempQueue.pop();
-        i++;
-    }
-    tempQueue.~queue();
+    ShowWaitingList();
 }
 
 void Admin::ViewDosesRecord() {
     char input;
-    cout << "Enter 1 to view records of people who received one dose only" << endl;
-    cout << "Enter 2 to view records of people who received both doses" << endl;
+    system("CLS");
+    cout << "Enter 1 to view records of people who received one dose only \n"
+    << "Enter 2 to view records of people who received both doses" << endl;
     cin >> input;
     vector<Entry> records;
     // Filter records based on the number of doses
@@ -134,18 +117,19 @@ void Admin::ViewDosesRecord() {
     }
 }
 
-float Admin::ViewStatistics()
+void Admin::ViewStatistics()
 {
     int temp = 0;
+    int allDoses = 0;
     int males = 0;
     int females = 0;
     char input;
-    cout << "Type F To see the The Amount of People Who Recieved The first Dose only Or Type B to see the Amount of People Who Recieved Both Doses Or Type G To See the Amount of Males and Females on The System" << endl;
+    system("CLS");
+    cout << "- Type F To see the The Amount of People Who Recieved The first Dose only  \n- Type B to see the Amount of People Who Recieved Both Doses \n- Type G To See the Amount of Males and Females on The System" << endl;
     cin >> input;
     //Function To See the Amount of People Who Recieved the First Dose Only
     if (input == 'F' || input == 'f')
     {
-        
         queue<Entry> tempList = waitingList;
         while (!tempList.empty()) {
             if (tempList.front().firstDose == true)
@@ -155,7 +139,8 @@ float Admin::ViewStatistics()
             tempList.pop();
         }
         tempList.~queue();
-        return (temp / entries.size());
+        cout << "The number of people that took the first dose only is: " << temp << endl;
+        return;
     }
     //Function to see the Amount of People Who Recieved Both Doses
     else if (input == 'B' || input == 'b')
@@ -163,46 +148,48 @@ float Admin::ViewStatistics()
         for (pair<int, Entry> entry : entries) {
             if (entry.second.firstDose == true && entry.second.secondDose == true)
             {
-                temp++;
+                allDoses++;
             }
         }
-        return (temp / entries.size());
+        cout << "The number of people that took the two doses is: " << allDoses << endl;
+        return;
     }
     //Function to See the Amount of Males and Females In the System
     else if (input == 'G' || input == 'g')
     {
         for (pair<int, Entry> entry : entries) {
-            if (entry.second.age == 'M' || entry.second.age == 'm')
+            if (entry.second.gender == 'M' || entry.second.gender == 'm')
             {
                 males++;
             }
         }
         queue<Entry> tempList = waitingList;
         while (!tempList.empty()) {
-            if (tempList.front().age == 'M' || tempList.front().age == 'm')
+            if (tempList.front().gender == 'M' || tempList.front().gender == 'm')
             {
                 males++;
             }
             tempList.pop();
         }
         tempList.~queue();
-        return (males / entries.size());
         for (pair<int, Entry> entry : entries) {
-            if (entry.second.age == 'F' || entry.second.age == 'f')
+            if (entry.second.gender == 'F' || entry.second.gender == 'f')
             {
                 females++;
             }
         }
         queue<Entry> tempList2 = waitingList;
         while (!tempList2.empty()) {
-            if (tempList2.front().age == 'F' || tempList2.front().age == 'f')
+            if (tempList2.front().gender == 'F' || tempList2.front().gender == 'f')
             {
                 females++;
             }
             tempList2.pop();
         }
         tempList2.~queue();
-        return (females / entries.size());
+        int returnValues[2] = { males, females };
+        cout << "The number of males is: " << males << endl << "The number of females is: " << females << endl;
+        return;
     }
     //If the Character is wrong
     else
