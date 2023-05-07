@@ -176,6 +176,12 @@ void MainManager::Start()
             cin >> secondDate;
             cout << "Enter Your Id:\n";
             cin >> id2;
+            while (CheckID(id2))
+            {
+                cout << "This Id Has Been Entered Before The Id Must Be Unique\n";
+                cout << "Please enter The Correct Id\n";
+                cin >> id2;
+            }
             cout << "Enter Your Age:\n";
             cin >> age;
             cout << "Enter Your Gender:\n";
