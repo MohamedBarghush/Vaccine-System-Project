@@ -37,10 +37,10 @@ void MainManager::Start()
     }
     if (s == "admin")
     {
-        cout <<"Enter The Admin Password\n";
+        cout << "Enter The Admin Password\n";
+        cout << "You Have 3 Attemps\n";
         string pass;
         cin >> pass;
-        cout << "You Have 3 Attemps\n";
         bool flag = true;
         int count = 0;
         while (!Check_Admin(pass))
@@ -58,6 +58,7 @@ void MainManager::Start()
         {
             return;
         }
+        system("cls");
         int choice;
         cout << "To View all Records Press 1:\n";
         cout << "To View specific Record Press 2:\n";
@@ -70,10 +71,12 @@ void MainManager::Start()
         cin >> choice;
         if(choice== 1)
         {
+            system("cls");
             a1.ViewAll();
         }
         else if(choice== 2)
         {
+            system("cls");
             cout << "Enter The Id of the Record to Show\n";
             int id; cin >> id;
             a1.ViewOne(id);
@@ -81,27 +84,33 @@ void MainManager::Start()
         else if(choice==3){
             a1.DeleteAll();
         }
-        else if(choice== 4)        {
+        else if(choice== 4) {
+            system("cls");
             cout << "Enter The Id of the Record to Delete \n";
             int id; cin >> id;
             a1.Delete(id);
         }
         else if (choice == 5) {
+            system("cls");
             a1.ViewDosesRecord();
         }
         else if (choice == 6) {
+            system("cls");
             a1.ViewOrderedByAge();
         }
         else if (choice == 7) {
+            system("cls");
             a1.ViewWaitingList();
         }
         else if (choice == 8) {
+            system("cls");
             cout << "The Statistics are:\n";
             a1.ViewStatistics();
         }
     }
     else if (s == "user")
     {
+        system("cls");
         int choice;
         cout << "To Create New Entry Press 1:\n";
         cout << "To View Your Data Press 2:\n";
@@ -134,18 +143,18 @@ void MainManager::Start()
             }
             cout << "Enter Your Age:\n";
             cin >> age;
-            cout << "Enter Your Gender:\n";
+            cout << "Enter Your Gender (M for male and F for female):\n";
             cin >> gender;
             cout << "Enter Your firstDose 1 for yes 0 for no :\n";
             cin >> firstDose;
             if (firstDose == 1) {
-                cout << "Enter Your FirstDate:\n";
+                cout << "Enter the date you took your first dose in (Ex: 12/3/2003):\n";
                 cin >> firstDate;
             }
             cout << "Enter Your secondDose 1 for yes 0 for no:\n";
             cin >> secondDose;
             if (secondDose == 1) {
-                cout << "Enter Your SecondDate:\n";
+                cout << "Enter the date you took your second dose in (Ex: 12/3/2003):\n";
                 cin >> secondDate;
             }
             CreateEntry(name, id, government, age, gender, vaccineType, firstDose, firstDate, secondDose, secondDate);
@@ -153,12 +162,14 @@ void MainManager::Start()
         }
         else if(choice== 2)
         {
+            system("cls");
             cout << "Enter Your Id to Veiw Your Data\n";
             int id1; cin >> id1;
             ShowEntry(id1);
         }
         else if(choice== 3)
         {
+            system("cls");
             cout << "Enter The Data of The new Entry:\n";
             string name, government, vaccineType, firstDate, secondDate;
             int id2, age;
@@ -178,7 +189,7 @@ void MainManager::Start()
             cin >> id2;
             cout << "Enter Your Age:\n";
             cin >> age;
-            cout << "Enter Your Gender:\n";
+            cout << "Enter Your Gender (M for male and F for female):\n";
             cin >> gender;
             cout << "Enter Your firstDose 1 for yes 0 for no :\n";
             cin >> firstDose;
@@ -208,6 +219,7 @@ void MainManager::Start()
         }
         else if(choice==4)
         {
+            system("cls");
             cout << "Enter Your Id to Delete Your Data\n";
             int id3; cin >> id3;
             DeleteEntry(id3);
