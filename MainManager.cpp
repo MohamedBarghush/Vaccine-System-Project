@@ -552,6 +552,7 @@ bool MainManager::CheckID(int id)
             found2 = true;
             break;
         }
+        tempwaitingList.pop();
     }
     return found1||found2;
 }
