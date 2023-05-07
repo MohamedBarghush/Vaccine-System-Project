@@ -38,6 +38,7 @@ public:
     bool CheckVaccineStatus(int id);
     // Function to delete an entry from the entries vector or waiting list
     void DeleteEntry(int id);
+    // Function to delete all the entries everywhere
     void Delete_All();
     // Function to show a certain entry
     void ShowEntry(int id);
