@@ -5,13 +5,14 @@
 
 using namespace std;
 
-class User:MainManager {
+class User {
 public:
     Entry userEntry;
-    User() {
-
+    MainManager* mainManager;
+    User(MainManager& mainManager) {
+        this->mainManager = &mainManager;
     };
-    User(Entry entry, unordered_map<int, Entry> a, queue<Entry> q) {
+    User(Entry entry) {
         this->userEntry = entry;
     };
 
@@ -19,6 +20,7 @@ public:
     void CreateUserEntry();
     void EditUserEntry(int id);
     void DeleteUserEntry(int id);
+    void ShowUserEntry(int id);
     /*Entry ShowEntry(int id) {};
     bool ShowVaccineStatue(int id) {};*/
 };

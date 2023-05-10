@@ -15,7 +15,7 @@ void User::CreateUserEntry() {
     getline(cin, newEntry.vaccineType);
     cout << "Enter Your Id:\n";
     cin >> newEntry.id;
-    while (CheckID(newEntry.id))
+    while (mainManager->CheckID(newEntry.id))
     {
         cout << "This Id Has Been Entered Before The Id Must Be Unique\n";
         cout << "Please enter The Correct Id\n";
@@ -40,9 +40,9 @@ void User::CreateUserEntry() {
         cin >> newEntry.secondDoseDate;
     }
     userEntry = newEntry;
-    CreateEntry(newEntry);
+    mainManager->CreateEntry(newEntry);
     //ShowAll();
-    SaveEntriesToFile("TestingCases.csv");
+    //mainManager->SaveEntriesToFile("TestingCases.csv");
 }
 
 void User::EditUserEntry(int id)
@@ -52,6 +52,7 @@ void User::EditUserEntry(int id)
     bool idEdited = false;
     int lastId = myNewEntry.id;
     int choice4; cin >> choice4;
+    cin.ignore();
     switch (choice4)
     {
     case 1:
@@ -97,16 +98,21 @@ void User::EditUserEntry(int id)
 
     Entry newEntry = { myNewEntry.name, myNewEntry.id, myNewEntry.government, myNewEntry.age, myNewEntry.gender, myNewEntry.vaccineType, myNewEntry.firstDose, myNewEntry.firstDoseDate, myNewEntry.secondDose, myNewEntry.secondDoseDate, myNewEntry.password };
     if (idEdited) {
-        DeleteEntry(lastId);
-        CreateEntry(myNewEntry);
+        mainManager->DeleteEntry(lastId);
+        mainManager->CreateEntry(myNewEntry);
     }
     else {
-        EditEntry(myNewEntry.id, newEntry);
+        mainManager->EditEntry(myNewEntry.id, newEntry);
     }
-    SaveEntriesToFile("TestingCases.csv");
+    //mainManager->SaveEntriesToFile("TestingCases.csv");
 }
 
 void User::DeleteUserEntry(int id)
 {
-    DeleteEntry(id);
+    mainManager->DeleteEntry(id);
+}
+
+void User::ShowUserEntry(int id)
+{
+    mainManager->ShowEntry(id);
 }

@@ -11,25 +11,23 @@ using namespace std;
 // Define Entry struct to hold information about each entry
 struct Entry {
 public:
-    string name;
-    int id;
-    string government;
-    int age;
-    char gender;
-    string vaccineType;
-    bool firstDose;
-    string firstDoseDate;
-    bool secondDose;
-    string secondDoseDate;
-    string password;
+    string name = "";
+    int id = 0;
+    string government = "";
+    int age = 0;
+    char gender = {};
+    string vaccineType = "";
+    bool firstDose = false;
+    string firstDoseDate = "";
+    bool secondDose = false;
+    string secondDoseDate = "";
+    string password = "";
 };
 
 class MainManager {
-protected:
+public:
     unordered_map<int, Entry> entries; // Map to store the entries
     queue<Entry> waitingList; // Queue to store the entries waiting for vaccination
-
-public:
 
     // Function to create a new entry and add it to the entries vector or waiting list
     void CreateEntry(Entry newEntry);
@@ -60,5 +58,5 @@ public:
     // Main Menu Functions
     void MainMenu();
     void Start();
-    bool Check_Admin(string s);
+    bool Check_Admin(string s, string pass);
 };
