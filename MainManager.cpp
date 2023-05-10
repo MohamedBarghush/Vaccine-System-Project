@@ -7,6 +7,7 @@
 #include <stack>
 #include "MainManager.h"
 #include"Admin.h"
+#include "User.h"
 
 using namespace std;
 void MainManager::MainMenu()
@@ -27,6 +28,7 @@ void MainManager::Start()
 {
     LoadEntriesFromFile("TestingCases.csv");
     Admin a1(entries,waitingList);
+    
     cout << "Welcome To Our Vacccine Tracking System \n";
     cout << "If You Are Admin Write Admin if you are User Type User \n";
     cout << "Case Doesnt Mater:\n";
@@ -102,125 +104,73 @@ void MainManager::Start()
     }
     else if (s == "user")
     {
+
+        User user;
         int choice;
         cout << "To Create New Entry Press 1:\n";
-        cout << "To View Your Data Press 2:\n";
-        cout << "To Edit Your Record Press 3:\n";
-        cout << "To Delete Your Record Press 4:\n";
+        cout << "To Access Your entry press 2\n";
         cin >> choice;
+        while (choice<1||choice>2)
+        {
+            cout << "Invalid Choice\n";
+            cout << "Enter Your Choice again\n";
+            cin >> choice;
+        }
         if(choice==1)
         {
-            string name, government, vaccineType, firstDate = "", secondDate = "";
-            int id, age;
-            char gender;
-            bool firstDose, secondDose;
-            cout << "Enter Your Name:\n";
-            cin.ignore();
-            getline(cin, name);
-            //cin.getline(name, 40);
-            cout << "Enter Your Government:\n";
-            //cin.ignore();
-            getline(cin, government);
-            cout << "Enter Your VaccineType:\n";
-            //cin.ignore();
-            getline(cin, vaccineType);
-            cout << "Enter Your Id:\n";
-            cin >> id;
-            while (CheckID(id))
-            {
-                cout << "This Id Has Been Entered Before The Id Must Be Unique\n";
-                cout << "Please enter The Correct Id\n";
-                cin >> id;
-            }
-            cout << "Enter Your Age:\n";
-            cin >> age;
-            cout << "Enter Your Gender:\n";
-            cin >> gender;
-            cout << "Enter Your firstDose 1 for yes 0 for no :\n";
-            cin >> firstDose;
-            if (firstDose == 1) {
-                cout << "Enter Your FirstDate:\n";
-                cin >> firstDate;
-            }
-            cout << "Enter Your secondDose 1 for yes 0 for no:\n";
-            cin >> secondDose;
-            if (secondDose == 1) {
-                cout << "Enter Your SecondDate:\n";
-                cin >> secondDate;
-            }
-            CreateEntry(name, id, government, age, gender, vaccineType, firstDose, firstDate, secondDose, secondDate);
-            SaveEntriesToFile("TestingCases.csv");
+            user.CreateUserEntry();
         }
         else if(choice== 2)
         {
-            cout << "Enter Your Id to Veiw Your Data\n";
-            int id1; cin >> id1;
-            ShowEntry(id1);
-        }
-        else if(choice== 3)
-        {
-            cout << "Enter The Data of The new Entry:\n";
-            string name, government, vaccineType, firstDate, secondDate;
-            int id2, age;
-            char gender;
-            bool firstDose, secondDose;
-            cout << "Enter Your Name:\n";
-            getline(cin, name);
-            cout << "Enter Your Government:\n";
-            cin >> government;
-            cout << "Enter Your VaccineType:\n";
-            cin >> vaccineType;
-            cout << "Enter Your FirstDate:\n";
-            cin >> firstDate;
-            cout << "Enter Your SecondDate:\n";
-            cin >> secondDate;
             cout << "Enter Your Id:\n";
-            cin >> id2;
-            while (CheckID(id2))
+            int id1; cin >> id1;
+            while (!CheckID(id1))
             {
-                cout << "This Id Has Been Entered Before The Id Must Be Unique\n";
+                cout << "This Id doesn't exist in our database\n";
                 cout << "Please enter The Correct Id\n";
-                cin >> id2;
+                cin >> id1;
             }
-            cout << "Enter Your Age:\n";
-            cin >> age;
-            cout << "Enter Your Gender:\n";
-            cin >> gender;
-            cout << "Enter Your firstDose 1 for yes 0 for no :\n";
-            cin >> firstDose;
-            cout << "Enter Your secondDose 1 for yes 0 for no:\n";
-            cin >> secondDose;
-
-            /*stringstream ss(line);
-            getline(ss, name, ',');
-            cout << name << endl;
-            system("pause");
-
-            ss >> id;
-            getline(ss, government, ',');
-            ss >> age;
-            ss >> genderChar;
-            getline(ss, vaccineType, ',');
-            getline(ss, firstDoseStr, ',');
-            getline(ss, firstDateStr, ',');
-            getline(ss, secondDoseStr, ',');
-            getline(ss, secondDateStr, ',');
-            bool firstDose = (firstDoseStr == "Yes");
-            bool secondDose = (secondDoseStr == "Yes");*/
-
-            Entry newEntry = { name, id2, government, age, gender, vaccineType, firstDose, firstDate, secondDose, secondDate };
-            EditEntry(id2, newEntry);
-            SaveEntriesToFile("TestingCases.csv");
+            Entry theEntry = GetEntry(id1);
+            User user(theEntry, entries, waitingList);
+            cout << "Enter Your Password :\n";
+            string password;
+            int count = 0;
+            cin >> password;
+            while (theEntry.password != password)
+            {
+                if (count == 0)
+                {
+                    cout << "You Have 3 Attemps\n";
+                }
+                cout << "The Password is not correct \n";
+                cout << "Please enter The Password Again\n";
+                count++;
+                cin >> password;
+            }
+            int choice2;
+            cout << "To View Your Data Press 1:\n";
+            cout << "To Edit Your Record Press 2:\n";
+            cout << "To Delete Your Record Press 3:\n";
+            cin >> choice2;
+            while (choice2 < 1 || choice2>3)
+            {
+                cout << "Invalid Choice\n";
+                cin >> choice;
+            }
+            if (choice2 == 1)
+            {
+                ShowEntry(id1);
+            }
+            else if (choice2 == 2)
+            {
+                user.EditUserEntry(id1);
+            }
+            else if (choice2 == 3)
+            {
+                user.DeleteUserEntry(id1);
+            }
         }
-        else if(choice==4)
-        {
-            cout << "Enter Your Id to Delete Your Data\n";
-            int id3; cin >> id3;
-            DeleteEntry(id3);
-        }
-    }
-    else {
-    cout << "Invalid Option\n";
+
     }
 }
 
@@ -238,10 +188,10 @@ bool MainManager::Check_Admin(string s)
 }
 
 // Function to create a new entry and add it to the entries vector or waiting list
-void MainManager::CreateEntry(string name, int id, string government, int age, char gender, string vaccineType, bool firstDose, string firstDate, bool secondDose, string secondDate) {
-    Entry newEntry = { name, id, government, age, gender, vaccineType, firstDose, firstDate, secondDose, secondDate };
-    if (firstDose && secondDose) {
-        entries.insert({ id, newEntry });  // Add to entries vector if already vaccinated
+void MainManager::CreateEntry(Entry newEntry) {
+    //Entry newEntry = { name, id, government, age, gender, vaccineType, firstDose, firstDate, secondDose, secondDate };
+    if (newEntry.firstDose && newEntry.secondDose) {
+        entries.insert({ newEntry.id, newEntry });  // Add to entries vector if already vaccinated
     }
     else {
         waitingList.push(newEntry);  // Add to waiting list if not yet vaccinated
@@ -360,6 +310,7 @@ void MainManager::ShowEntry(int id) {
     if (it != entries.end()) {
         cout << "\n" << "Entry: \nName: " << it->second.name << "\n"
             << "ID: " << it->second.id << "\n"
+            << "Password: " << it->second.password << "\n"
             << "Government: " << it->second.government << "\n"
             << "Age: " << it->second.age << "\n"
             << "Gender: " << it->second.gender << "\n"
@@ -375,6 +326,7 @@ void MainManager::ShowEntry(int id) {
         if (tempQueue.front().id == id) {
             cout << "\n" << "Entry: \nName: " << tempQueue.front().name << "\n"
                 << "ID: " << tempQueue.front().id << "\n"
+                << "Password: " << tempQueue.front().password << "\n"
                 << "Government: " << tempQueue.front().government << "\n"
                 << "Age: " << tempQueue.front().age << "\n"
                 << "Gender: " << tempQueue.front().gender << "\n"
@@ -393,12 +345,33 @@ void MainManager::ShowEntry(int id) {
     tempQueue.~queue();
 }
 
+// Function to get the entry
+Entry MainManager::GetEntry(int id) {
+    // Check if the entry is in the entries list
+    for (pair<int, Entry> entry : entries) {
+        if (entry.second.id == id) {
+            return entry.second;
+        }
+    }
+    // Check if the entry is in the waiting list
+    queue<Entry> temp = waitingList;
+    while (!temp.empty()) {
+        Entry entry = waitingList.front();
+        if (entry.id == id) {
+            return entry;
+        }
+        temp.pop();
+    }
+    temp.~queue();
+}
+
 // Function to show all entries and waiting list
 void MainManager::ShowAll() {
     cout << "Entries:\n";
     for (auto& entry : entries) {
         cout << "\n" << "Name: " << entry.second.name << "\n"
             << "ID: " << entry.second.id << "\n"
+            << "Password: " << entry.second.password << "\n"
             << "Government: " << entry.second.government << "\n"
             << "Age: " << entry.second.age << "\n"
             << "Gender: " << entry.second.gender << "\n"
@@ -413,6 +386,7 @@ void MainManager::ShowAll() {
         Entry entry = tempQue.front();
         cout << "\n" << i << ". Name: " << entry.name << "\n"
             << "ID: " << entry.id << "\n"
+            << "Password: " << entry.password << "\n"
             << "Government: " << entry.government << "\n"
             << "Age: " << entry.age << "\n"
             << "Gender: " << entry.gender << "\n"
@@ -434,6 +408,7 @@ void MainManager::ShowWaitingList() {
         Entry entry = tempQueue.front();
         cout << "\n" << i << ". Name: " << entry.name << "\n"
             << "ID: " << entry.id << "\n"
+            << "Password: " << entry.password << "\n"
             << "Government: " << entry.government << "\n"
             << "Age: " << entry.age << "\n"
             << "Gender: " << entry.gender << "\n"
@@ -452,6 +427,7 @@ void MainManager::ShowEntriesMap() {
     for (auto& entry : entries) {
         cout << "\n" << "Name: " << entry.second.name << "\n"
             << "ID: " << entry.second.id << "\n"
+            << "Password: " << entry.second.password << "\n"
             << "Government: " << entry.second.government << "\n"
             << "Age: " << entry.second.age << "\n"
             << "Gender: " << entry.second.gender << "\n"
@@ -468,7 +444,7 @@ void MainManager::SaveEntriesToFile(string filename) {
         file << "";
     }
     ofstream file(filename);
-    file << "Name,ID,Government,Age,Gender,Vaccine Type,First Dose,First Date,Second Dose,Second Date\n";  // Write the header row
+    file << "Name,ID,Government,Age,Gender,Vaccine Type,First Dose,First Date,Second Dose,Second Date,Password\n";  // Write the header row
     for (pair<int, Entry> entry : entries) {
         file << entry.second.name
             << "," << entry.second.id
@@ -480,6 +456,7 @@ void MainManager::SaveEntriesToFile(string filename) {
             << "," << (entry.second.firstDose ? entry.second.firstDoseDate : "")
             << "," << (entry.second.secondDose ? "Yes" : "No")
             << "," << (entry.second.secondDose ? entry.second.secondDoseDate : "")
+            << "," << (entry.second.password)
             << "\n";
     }
     queue<Entry> tempList = waitingList;
@@ -495,10 +472,12 @@ void MainManager::SaveEntriesToFile(string filename) {
             << "," << (entry.firstDose ? entry.firstDoseDate : "")
             << "," << (entry.secondDose ? "Yes" : "No")
             << "," << (entry.secondDose ? entry.secondDoseDate : "")
+            << "," << (entry.password)
             << "\n";
         tempList.pop();
     }
-    tempList.~queue();
+    //ShowAll();
+    //tempList.~queue();
     file.close();
     cout << "Entries saved to file: " << filename << "\n";
 }
@@ -530,14 +509,15 @@ void MainManager::LoadEntriesFromFile(string filename) {
         
         stringstream ss(line);
 
-        for (int i = 0; i <= 9; i++) {
+        for (int i = 0; i <= 10; i++) {
             string field= "";
             getline(ss, field, ',');
             row.push_back(field);
         }
         //cout << row[0] << "," << row[1] << "," << row[2] << "," << row[3] << "," << row[4] << "," << row[5] << "," << row[6] << "," << row[7] << "," << row[8] << "," << row[9] << endl;
         //cout << (row[6] == "Yes") << endl;
-        CreateEntry(row[0], stoi(row[1]), row[2], stoi(row[3]), row[4][0], row[5], row[6] == "Yes", row[7], row[8] == "Yes", row[9]);
+        Entry newEntry = { row[0], stoi(row[1]), row[2], stoi(row[3]), row[4][0], row[5], row[6] == "Yes", row[7], row[8] == "Yes", row[9], row[10] };
+        CreateEntry(newEntry);
     }
 
     infile.close();
@@ -545,22 +525,26 @@ void MainManager::LoadEntriesFromFile(string filename) {
 
 bool MainManager::CheckID(int id)
 {
-    bool found1 = false, found2 = false;
+    //bool found1 = false, found2 = false;
     queue<Entry> tempwaitingList = waitingList;
-    if (entries.find(id) != entries.end()) {
-        found1 = true;
+    auto it = entries.find(id);
+    if (it != entries.end()) {
+        if (it->second.id == id)
+            return true;
     }
+    /*if (entries.find(id) != entries.end()) {
+        return true;
+    }*/
     while (!tempwaitingList.empty())
     {
         Entry entry = tempwaitingList.front();
         if (entry.id == id)
         {
-            found2 = true;
-            break;
+            return true;
         }
         tempwaitingList.pop();
     }
-    return found1||found2;
+    return false;
 }
 
 

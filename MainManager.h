@@ -21,6 +21,7 @@ public:
     string firstDoseDate;
     bool secondDose;
     string secondDoseDate;
+    string password;
 };
 
 class MainManager {
@@ -31,7 +32,7 @@ protected:
 public:
 
     // Function to create a new entry and add it to the entries vector or waiting list
-    void CreateEntry(string name, int id, string government, int age, char gender, string vaccineType, bool firstDose, string firstDate, bool secondDose, string secondDate);
+    void CreateEntry(Entry newEntry);
     // Function to edit an entry and add it to the waiting list if not fully vaccinated
     bool EditEntry(int id, Entry newEntry);
     // Function to check the vaccination status of a given entry
@@ -41,6 +42,8 @@ public:
     void Delete_All();
     // Function to show a certain entry
     void ShowEntry(int id);
+    // Function to get the current entry
+    Entry GetEntry(int id);
     // Function to show all entries and waiting list
     void ShowAll();
     // Function to show all the netries in the waiting lists
