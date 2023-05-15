@@ -26,9 +26,10 @@ int main()
         while (s != "user" && s != "admin") {
                cout << "Invalid input. Please check the spelling: \n";
                  cin >> s;
-            transform(s.begin(), s.end(), s.begin(), [](unsigned char c) {
-                return std::tolower(c);
-                });
+            transform(s.begin(), s.end(), s.begin(), [](unsigned char c) 
+            {
+                return tolower(c);
+            });
         }
         cout << "Rigth input :) \n";
 
@@ -65,6 +66,13 @@ int main()
             cout << "To View the record of the user that needs to be vaccinated from the waiting list Press 7:\n";
             cout << "To View Basic statistics Press 8:\n";
             cin >> choice;
+
+            while (choice < 0 || choice > 8)
+            {
+                cout << "Invalid input \n";
+                cout << "Enter Your Choice again \n";
+                cin >> choice;
+            }
             if (choice == 1)
             {
                 admin.ViewAll();
@@ -166,6 +174,11 @@ int main()
         cout << "If You Want To Continue Press Y or y\n";
         cout << "Else press N or n\n";
         char ch; cin >> ch;
+        while (ch != 'N' && ch != 'n' && ch != 'Y' && ch != 'y')
+        {
+            cout << "Invalid input Please enter it again\n";
+            cin >> ch;
+        }
         if (ch == 'N' || ch == 'n')
         {
             mainManager.SaveEntriesToFile("TestingCases.csv");

@@ -14,6 +14,7 @@ void Admin::Delete(int ID)
 
 void Admin::DeleteAll()
 {
+
     mainManager->Delete_All();
     //mainManager.SaveEntriesToFile("TestingCases.csv");
 }

@@ -95,7 +95,6 @@ void MainManager::Delete_All() {
     // you need to save the entries to the file
 }
 
-
 // Function to check the vaccination status of a given entry
 bool MainManager::CheckVaccineStatus(int id) {
     for (pair<int, Entry> entry : entries) {
@@ -103,7 +102,8 @@ bool MainManager::CheckVaccineStatus(int id) {
             return (entry.second.firstDose && entry.second.secondDose);
         }
     }
-    return NULL;  // Return NULL if no entry is found with the given name
+    return NULL; 
+    // Return NULL if no entry is found with the given name
 }
 
 // Function to delete an entry from the entries vector or waiting list
