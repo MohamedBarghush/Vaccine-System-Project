@@ -48,6 +48,8 @@ void User::CreateUserEntry() {
 void User::EditUserEntry(int id)
 {
     cout << "What would you like to change in your data:\n1:Name\n2:Government\n3:Vaccine Type\n4:First Dose\n5:Second Dose\n6:ID\n7:Password\n";
+    Entry temp = mainManager->GetEntry(id);
+    temp.password;
     Entry myNewEntry = userEntry;
     bool idEdited = false;
     int lastId = myNewEntry.id;

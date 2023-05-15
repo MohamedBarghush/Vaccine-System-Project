@@ -18,12 +18,20 @@ int main()
         cout << "Welcome To Our Vaccine Tracking System \n";
         cout << "If You Are Admin Write Admin if you are User Type User \n";
         cout << "Case Doesnt Mater:\n";
-
         string s;
         cin >> s;
         for (auto& c : s) {
             c = tolower(c);
         }
+        while (s != "user" && s != "admin") {
+               cout << "Invalid input. Please check the spelling: \n";
+                 cin >> s;
+            transform(s.begin(), s.end(), s.begin(), [](unsigned char c) {
+                return std::tolower(c);
+                });
+        }
+        cout << "Rigth input :) \n";
+
         if (s == "admin")
         {
             cout << "Enter The Admin Password\n";
@@ -155,7 +163,6 @@ int main()
                 }
             }
         }
-
         cout << "If You Want To Continue Press Y or y\n";
         cout << "Else press N or n\n";
         char ch; cin >> ch;
