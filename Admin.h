@@ -1,10 +1,17 @@
 #pragma once
 #include "MainManager.h"
+#include <string>
+#include <iostream>
 #include <queue>
-class Admin : public MainManager {
+
+using namespace std;
+
+class Admin {
 public:
+    //string password;
     string password;
-    Admin(unordered_map<int, Entry> a , queue<Entry> q);
+    MainManager* mainManager;
+    Admin(MainManager& mainManager);
     void Delete(int ID);
     void DeleteAll();
     void ViewAll();

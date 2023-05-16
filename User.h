@@ -5,29 +5,22 @@
 
 using namespace std;
 
-class User:MainManager {
+class User {
 public:
-    string fullName;
-    int id;
-    string password;
-    string government;
-    int age;
-    char gender;
-    bool vaccinated;
-    User(string fullName, int id, string password, string government, int age, char gender, bool vaccinated) {
-        this->fullName = fullName;
-        this->id = id;
-        this->password = password;
-        this->government = government;
-        this->age = age;
-        this->gender = gender;
-        this->vaccinated = vaccinated;
+    Entry userEntry;
+    MainManager* mainManager;
+    User(MainManager& mainManager) {
+        this->mainManager = &mainManager;
+    };
+    User(Entry entry) {
+        this->userEntry = entry;
     };
 
 //Inherited Functions From Main Manager
-    void CreateEntry() {};
-    bool EditEntry(int id) {};
-    void DeleteEntry(int id) {};
-    Entry ShowEntry(int id) {};
-    bool ShowVaccineStatue(int id) {};
+    void CreateUserEntry();
+    void EditUserEntry(int id);
+    void DeleteUserEntry(int id);
+    void ShowUserEntry(int id);
+    /*Entry ShowEntry(int id) {};
+    bool ShowVaccineStatue(int id) {};*/
 };

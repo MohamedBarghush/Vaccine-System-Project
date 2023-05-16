@@ -1,44 +1,44 @@
 #include "Admin.h"
 
-
-Admin::Admin(unordered_map<int,Entry> a , queue<Entry> q)
+Admin::Admin(MainManager& mainManager)
 {
-    entries = a;
-    waitingList = q;
-    password = "Admin_1234";
+    this->mainManager = &mainManager;
+    this->password = "Admin_1234";
 }
 
 void Admin::Delete(int ID)
 {
-    DeleteEntry(ID);
+    mainManager->DeleteEntry(ID);
+    //mainManager.SaveEntriesToFile("TestingCases.csv");
 }
 
 void Admin::DeleteAll()
 {
-    Delete_All();
-    SaveEntriesToFile("TestingCases.csv");
+
+    mainManager->Delete_All();
+    //mainManager.SaveEntriesToFile("TestingCases.csv");
 }
 
 void Admin::ViewAll()
 {
-    ShowAll();
+    mainManager->ShowAll();
 }
 
 void Admin::ViewOne(int ID)
 {
-    ShowEntry(ID);
+    mainManager->ShowEntry(ID);
 }
 
 void Admin::ViewOrderedByAge() {
     vector<pair<int, Entry>> ageVector;
 
     // Insert all entries into the vector
-    for (auto& entry : entries) {
+    for (auto& entry : mainManager->entries) {
         ageVector.push_back(make_pair(entry.second.age, entry.second));
     }
 
     // Insert all entries in the waiting list into the vector
-    queue<Entry> tempWaitingList = waitingList;
+    queue<Entry> tempWaitingList = mainManager->waitingList;
     while (!tempWaitingList.empty()) {
         ageVector.push_back(make_pair(tempWaitingList.front().age, tempWaitingList.front()));
         tempWaitingList.pop();
@@ -66,7 +66,7 @@ void Admin::ViewOrderedByAge() {
 
 void Admin::ViewWaitingList()
 {
-    ShowWaitingList();
+    mainManager->ShowWaitingList();
 }
 
 void Admin::ViewDosesRecord() {
@@ -78,12 +78,12 @@ void Admin::ViewDosesRecord() {
     vector<Entry> records;
     // Filter records based on the number of doses
     if (input == '1') {
-        for (auto& entry : entries) {
+        for (auto& entry : mainManager->entries) {
             if (entry.second.firstDose && !entry.second.secondDose) {
                 records.push_back(entry.second);
             }
         }
-        queue<Entry> tempList = waitingList;
+        queue<Entry> tempList = mainManager->waitingList;
         while (!tempList.empty()) {
             if (tempList.front().firstDose && !tempList.front().secondDose) {
                 records.push_back(tempList.front());
@@ -93,7 +93,7 @@ void Admin::ViewDosesRecord() {
         tempList.~queue();
     }
     else if (input == '2') {
-        for (auto& entry : entries) {
+        for (auto& entry : mainManager->entries) {
             if (entry.second.firstDose && entry.second.secondDose) {
                 records.push_back(entry.second);
             }
@@ -130,7 +130,7 @@ void Admin::ViewStatistics()
     //Function To See the Amount of People Who Recieved the First Dose Only
     if (input == 'F' || input == 'f')
     {
-        queue<Entry> tempList = waitingList;
+        queue<Entry> tempList = mainManager->waitingList;
         while (!tempList.empty()) {
             if (tempList.front().firstDose == true)
             {
@@ -145,7 +145,7 @@ void Admin::ViewStatistics()
     //Function to see the Amount of People Who Recieved Both Doses
     else if (input == 'B' || input == 'b')
     {
-        for (pair<int, Entry> entry : entries) {
+        for (pair<int, Entry> entry : mainManager->entries) {
             if (entry.second.firstDose == true && entry.second.secondDose == true)
             {
                 allDoses++;
@@ -157,13 +157,13 @@ void Admin::ViewStatistics()
     //Function to See the Amount of Males and Females In the System
     else if (input == 'G' || input == 'g')
     {
-        for (pair<int, Entry> entry : entries) {
+        for (pair<int, Entry> entry : mainManager->entries) {
             if (entry.second.gender == 'M' || entry.second.gender == 'm')
             {
                 males++;
             }
         }
-        queue<Entry> tempList = waitingList;
+        queue<Entry> tempList = mainManager->waitingList;
         while (!tempList.empty()) {
             if (tempList.front().gender == 'M' || tempList.front().gender == 'm')
             {
@@ -172,13 +172,13 @@ void Admin::ViewStatistics()
             tempList.pop();
         }
         tempList.~queue();
-        for (pair<int, Entry> entry : entries) {
+        for (pair<int, Entry> entry : mainManager->entries) {
             if (entry.second.gender == 'F' || entry.second.gender == 'f')
             {
                 females++;
             }
         }
-        queue<Entry> tempList2 = waitingList;
+        queue<Entry> tempList2 = mainManager->waitingList;
         while (!tempList2.empty()) {
             if (tempList2.front().gender == 'F' || tempList2.front().gender == 'f')
             {
