@@ -192,7 +192,7 @@ Entry MainManager::GetEntry(int id) {
     // Check if the entry is in the waiting list
     queue<Entry> temp = waitingList;
     while (!temp.empty()) {
-        Entry entry = waitingList.front();
+        Entry entry = temp.front();
         if (entry.id == id) {
             return entry;
         }
@@ -362,7 +362,6 @@ void MainManager::LoadEntriesFromFile(string filename) {
 bool MainManager::CheckID(int id)
 {
     //bool found1 = false, found2 = false;
-    queue<Entry> tempwaitingList = waitingList;
     auto it = entries.find(id);
     if (it != entries.end()) {
         if (it->second.id == id)
@@ -371,6 +370,7 @@ bool MainManager::CheckID(int id)
     /*if (entries.find(id) != entries.end()) {
         return true;
     }*/
+    queue<Entry> tempwaitingList = waitingList;
     while (!tempwaitingList.empty())
     {
         Entry entry = tempwaitingList.front();

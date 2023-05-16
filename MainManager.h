@@ -80,7 +80,5 @@ public:
     bool CheckID(int id);
 
     // Main Menu Functions
-    void MainMenu();
-    void Start();
     bool Check_Admin(string s, string pass);
 };
