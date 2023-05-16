@@ -86,15 +86,6 @@ bool MainManager::EditEntry(int id, Entry newEntry) {
     }
 }
 
-// Function to delete all the entries everywhere
-void MainManager::Delete_All() {
-    entries.clear();
-    while (!waitingList.empty()) {
-        waitingList.pop();
-    }
-    // you need to save the entries to the file
-}
-
 // Function to check the vaccination status of a given entry
 bool MainManager::CheckVaccineStatus(int id) {
     for (pair<int, Entry> entry : entries) {

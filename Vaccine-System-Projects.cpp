@@ -31,7 +31,7 @@ int main()
                 return tolower(c);
             });
         }
-        cout << "Rigth input :) \n";
+        cout << "Right input :) \n";
 
         if (s == "admin")
         {
