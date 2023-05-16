@@ -139,10 +139,18 @@ void MainManager::DeleteEntry(int id) {
     }
 }
 
+// Function to delete all the entries everywhere
+void MainManager::Delete_All() {
+    entries.clear();
+    while (!waitingList.empty()) {
+        waitingList.pop();
+    }
+    // you need to save the entries to the file
+}
+
 // Function to show a certain entry
 void MainManager::ShowEntry(int id) {
     auto it = entries.find(id);
-    bool found = false;
     if (it != entries.end()) {
         cout << "\n" << "Entry: \nName: " << it->second.name << "\n"
             << "ID: " << it->second.id << "\n"
@@ -152,7 +160,7 @@ void MainManager::ShowEntry(int id) {
             << "Gender: " << it->second.gender << "\n"
             << "Vaccine Type: " << it->second.vaccineType << "\n"
             << "Vaccinated First Dose: " << (it->second.firstDose ? "Yes, on " + it->second.firstDoseDate : "No") << "\n"
-            << "Vaccinated Second Dose: " << (it->second.secondDose ? "Yes, on " + it->second.secondDoseDate : "No") 
+            << "Vaccinated Second Dose: " << (it->second.secondDose ? "Yes, on " + it->second.secondDoseDate : "No")
             << "\nWaiting List: " << "NO" << "\n\n";
         return;
     }
@@ -177,7 +185,6 @@ void MainManager::ShowEntry(int id) {
             tempQueue.pop();
         }
     }
-    cout << "Invalid ID!!!" << endl;
     tempQueue.~queue();
 }
 
@@ -213,10 +220,12 @@ void MainManager::ShowAll() {
             << "Gender: " << entry.second.gender << "\n"
             << "Vaccine Type: " << entry.second.vaccineType << "\n"
             << "Vaccinated First Dose: " << (entry.second.firstDose ? "Yes, on " + entry.second.firstDoseDate : "No") << "\n"
-            << "Vaccinated Second Dose: " << (entry.second.secondDose ? "Yes, on "+entry.second.secondDoseDate : "No") << "\n\n";
+            << "Vaccinated Second Dose: " << (entry.second.secondDose ? "Yes, on " + entry.second.secondDoseDate : "No") << "\n\n";
     }
     cout << "Waiting list:\n";
+    queue<Entry> tempQueue = waitingList;
     int i = 1;
+    
     queue<Entry> tempQue = waitingList;
     while (!tempQue.empty()) {
         Entry entry = tempQue.front();

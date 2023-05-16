@@ -44,8 +44,6 @@ public:
 
     //Seif
     void DeleteEntry(int id);
-
-    //Youssef
     void Delete_All();
 
     // Function to show a certain entry

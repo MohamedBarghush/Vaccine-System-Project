@@ -97,9 +97,7 @@ void Admin::ViewDosesRecord() {
             if (entry.second.firstDose && entry.second.secondDose) {
                 records.push_back(entry.second);
             }
-
         }
-
     }
     // Sort records by ID
     sort(records.begin(), records.end(), [](Entry a, Entry b) {
@@ -132,7 +130,6 @@ void Admin::ViewStatistics()
     //Function To See the Amount of People Who Recieved the First Dose Only
     if (input == 'F' || input == 'f')
     {
-
         queue<Entry> tempList = mainManager->waitingList;
         while (!tempList.empty()) {
             if (tempList.front().firstDose == true)
